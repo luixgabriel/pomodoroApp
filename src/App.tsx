@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PomodoroTimer } from './components/pomodoro-timer'
-import { Newspaper } from 'lucide-react'
+import { Newspaper, Timer, BedDouble, ArrowUp10 } from 'lucide-react'
 
 function App() {
   const [isOpen, setIsOpen] = useState<boolean | string | null>(
@@ -31,7 +31,7 @@ function App() {
             />
           </div>
           <div className="mb-5 flex gap-5 text-lg">
-            <Newspaper color="white" />
+            <Timer color="white" />
             <h1 className="font-raleway text-white">Timer</h1>
             <input
               type="text"
@@ -39,7 +39,7 @@ function App() {
             />
           </div>
           <div className=" mb-5 flex gap-5 text-lg">
-            <Newspaper color="white" />
+            <BedDouble color="white" />
             <h1 className="font-raleway text-white">Time to rest</h1>
             <input
               type="text"
@@ -47,7 +47,7 @@ function App() {
             />
           </div>
           <div className=" mb-5 flex gap-5 text-lg">
-            <Newspaper color="white" />
+            <ArrowUp10 color="white" />
             <h1 className="font-raleway text-white">Number of pomodoros</h1>
             <input
               type="text"
