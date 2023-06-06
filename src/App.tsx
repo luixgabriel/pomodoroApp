@@ -42,7 +42,9 @@ function App() {
           </div>
         </div>
       </div>
-      <h1>{/* <PomodoroTimer defaultPomodoroTimer={0} /> */}</h1>
+      <h1>
+        <PomodoroTimer defaultPomodoroTimer={0} />
+      </h1>
     </div>
   )
 }
