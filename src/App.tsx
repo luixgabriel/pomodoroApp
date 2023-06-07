@@ -16,6 +16,7 @@ function App() {
     return (
       <h1>
         <PomodoroTimer
+          task={task}
           PomodoroTimer={Number(pomodoroTimer)}
           shortRestTIme={Number(shortRestTime)}
           longRestTime={Number(longRestTime)}
@@ -83,6 +84,7 @@ function App() {
           <button
             onClick={() => {
               localStorage.setItem('timerState', 'true')
+              localStorage.setItem('task', String(task))
               setIsOpen(true)
             }}
             className="
