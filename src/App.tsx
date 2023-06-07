@@ -6,11 +6,21 @@ function App() {
   const [isOpen, setIsOpen] = useState<boolean | string | null>(
     localStorage.getItem('timerState'),
   )
+  const [task, setTask] = useState('')
+  const [pomodoroTimer, setPomodoroTimer] = useState('')
+  const [shortRestTime, setShortRestTime] = useState('')
+  const [longRestTime, setLongRestTime] = useState('5000')
+  const [cycles, setCycles] = useState('')
 
   if (isOpen) {
     return (
       <h1>
-        <PomodoroTimer defaultPomodoroTimer={6000} />
+        <PomodoroTimer
+          PomodoroTimer={Number(pomodoroTimer)}
+          shortRestTIme={Number(shortRestTime)}
+          longRestTime={Number(longRestTime)}
+          cycles={Number(cycles)}
+        />
       </h1>
     )
   }
@@ -22,12 +32,16 @@ function App() {
         </div>
         <div className="h-5/6 w-1 rounded-sm bg-white" />
         <div className="flex min-w-[40%] flex-col justify-center">
-          <div className="mb-5 flex w-full gap-4  text-lg ">
+          <div className="mb-5 flex w-full gap-4 text-lg ">
             <Newspaper color="white" />
             <h1 className="font-raleway text-white">Task</h1>
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
+              value={task}
+              name="task"
+              onChange={(e) => setTask(e.target.value)}
+              required
             />
           </div>
           <div className="mb-5 flex gap-5 text-lg">
@@ -36,6 +50,10 @@ function App() {
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
+              value={pomodoroTimer}
+              name="task"
+              onChange={(e) => setPomodoroTimer(e.target.value)}
+              required
             />
           </div>
           <div className=" mb-5 flex gap-5 text-lg">
@@ -44,6 +62,10 @@ function App() {
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
+              value={shortRestTime}
+              name="task"
+              onChange={(e) => setShortRestTime(e.target.value)}
+              required
             />
           </div>
           <div className=" mb-5 flex gap-5 text-lg">
@@ -52,6 +74,10 @@ function App() {
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
+              value={cycles}
+              name="task"
+              onChange={(e) => setCycles(e.target.value)}
+              required
             />
           </div>
           <button

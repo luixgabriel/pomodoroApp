@@ -4,22 +4,32 @@ import { Button } from './button'
 import { Timer } from './timer'
 
 interface PomodoroTimerProps {
-  defaultPomodoroTimer: number
+  PomodoroTimer: number
+  shortRestTIme: number
+  longRestTime: number
+  cycles: number
 }
 
 export function PomodoroTimer({
-  defaultPomodoroTimer,
+  PomodoroTimer,
+  shortRestTIme,
+  longRestTime,
+  cycles,
 }: PomodoroTimerProps): React.JSX.Element {
-  const [mainTime, setMainTime] = useState(defaultPomodoroTimer)
+  const [mainTime, setMainTime] = useState(PomodoroTimer)
   useInterval(() => {
     setMainTime(mainTime - 1)
   }, 1000)
 
   return (
-    <div>
-      <h2>trabalahdno</h2>
-      <Timer mainTime={mainTime} />
-      <Button text="oiii" />
+    <div className="flex items-center justify-center bg-yellow-400">
+      <div>
+        <h2>You are working</h2>
+        <Timer mainTime={mainTime} />
+        <Button text="teste" />
+        <Button text="teste" />
+        <Button text="teste" classname="bg-red-500 text-white" />
+      </div>
     </div>
   )
 }
