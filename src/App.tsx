@@ -9,7 +9,7 @@ function App() {
   const [task, setTask] = useState('')
   const [pomodoroTimer, setPomodoroTimer] = useState('')
   const [shortRestTime, setShortRestTime] = useState('')
-  const [longRestTime, setLongRestTime] = useState('5000')
+  const [longRestTime, setLongRestTime] = useState('')
   const [cycles, setCycles] = useState('')
 
   if (isOpen) {
@@ -85,6 +85,12 @@ function App() {
             onClick={() => {
               localStorage.setItem('timerState', 'true')
               localStorage.setItem('task', String(task))
+              localStorage.setItem(
+                'pomodoroTimer',
+                String(Number(pomodoroTimer) * 60),
+              )
+              localStorage.setItem('shortRestTime', String(shortRestTime))
+              localStorage.setItem('cycles', String(cycles))
               setIsOpen(true)
             }}
             className="
@@ -97,7 +103,7 @@ function App() {
             px-4 py-2
             font-raleway
             text-white
-            hover:bg-blue-500"
+            hover:bg-blue-600"
           >
             {' '}
             Start

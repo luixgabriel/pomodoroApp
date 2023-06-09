@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useInterval } from '../hooks/useInterval'
 import { Button } from './button'
 import { Timer } from './timer'
@@ -18,14 +18,34 @@ export function PomodoroTimer({
   shortRestTIme,
   longRestTime,
   cycles,
-}: PomodoroTimerProps): React.JSX.Element {
-  const [mainTime, setMainTime] = useState(PomodoroTimer)
-  useInterval(() => {
-    setMainTime(mainTime - 1)
-  }, 1000)
+}: PomodoroTimerProps) {
+  const [mainTime, setMainTime] = useState<any>(
+    PomodoroTimer * 60 || localStorage.getItem('pomodoroTimer'),
+  )
+  const [timeCounting, setTimeCounting] = useState(false)
+  const [working, setWorking] = useState(false)
+
+  useEffect(() => {
+    if (working) {
+      document.body.classList.remove('bg-blue-500')
+      document.body.classList.add('bg-red-500')
+    }
+  }, [working])
+
+  useInterval(
+    () => {
+      setMainTime(mainTime - 1)
+    },
+    timeCounting ? 1000 : null,
+  )
+
+  const configureWork = () => {
+    setTimeCounting(true)
+    setWorking(true)
+  }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-red-500">
+    <div className="flex h-screen items-center justify-center">
       <div className="flex min-h-[80%] min-w-[50%] flex-col items-center justify-center gap-3 rounded-md  text-white">
         <div>
           <h1 className="flex gap-3 text-5xl font-bold">
@@ -39,7 +59,8 @@ export function PomodoroTimer({
         <Timer mainTime={mainTime} />
         <div className="flex w-full items-center justify-center">
           <Button
-            text="teste"
+            onclick={() => configureWork()}
+            text="Work"
             classname="bg-red-950 p-2 rounded-md text-white mx-5 w-20"
           />
           <Button
@@ -47,7 +68,8 @@ export function PomodoroTimer({
             classname="bg-red-950 p-2 rounded-md text-white mx-5 w-20"
           />
           <Button
-            text="teste"
+            onclick={() => setTimeCounting(!timeCounting)}
+            text={timeCounting ? 'Pause' : 'Play'}
             classname="bg-red-950 p-2 rounded-md text-white mx-5 w-20"
           />
         </div>
