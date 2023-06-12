@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useInterval } from '../hooks/useInterval'
 import { Button } from './button'
 import { Timer } from './timer'
 import { Briefcase } from 'lucide-react'
 import bellStart from '../sounds/bell-start.mp3'
 import bellFinish from '../sounds/bell-finish.mp3'
+import { secondsToTime } from '../utils/seconds-to-timer'
 const audioStartWorking = new Audio(bellStart)
 const audioStopWorking = new Audio(bellFinish)
 
@@ -16,31 +17,20 @@ interface PomodoroTimerProps {
   cycles: number
 }
 
-export function PomodoroTimer({
-  task,
-  PomodoroTimer,
-  shortRestTime,
-  longRestTime,
-  cycles,
-}: PomodoroTimerProps) {
+export function PomodoroTimer(props: PomodoroTimerProps) {
   const [mainTime, setMainTime] = useState<any>(
-    PomodoroTimer || localStorage.getItem('pomodoroTimer'),
+    props.PomodoroTimer || localStorage.getItem('pomodoroTimer'),
   )
 
   const [timeCounting, setTimeCounting] = useState(false)
   const [working, setWorking] = useState(false)
   const [resting, setResting] = useState(false)
-
-  useEffect(() => {
-    if (working) {
-      document.body.classList.remove('bg-blue-500')
-      document.body.classList.add('bg-red-500')
-    }
-    if (resting) {
-      document.body.classList.remove('bg-red-500')
-      document.body.classList.add('bg-blue-500')
-    }
-  }, [working, resting])
+  const [cyclesQtdManager, setCyclesQtdManager] = useState(
+    new Array(Number(localStorage.getItem('cycles')) - 1).fill(true),
+  )
+  const [completedCycles, setCompletedCycles] = useState(0)
+  const [fullWorkingTime, setFullWorkingTime] = useState(0)
+  const [numberOfPomodoros, setNumberOfPomodoros] = useState(0)
 
   useInterval(
     () => {
@@ -65,11 +55,46 @@ export function PomodoroTimer({
       setMainTime(localStorage.getItem('longRestTime'))
     } else {
       setMainTime(localStorage.getItem('shortRestTime'))
-      console.log(localStorage.getItem('shortRestTime'))
-      console.log(mainTime)
     }
     audioStopWorking.play()
   }
+
+  useEffect(() => {
+    if (working) {
+      document.body.classList.remove('bg-blue-500')
+      document.body.classList.add('bg-red-500')
+    }
+    if (resting) {
+      document.body.classList.remove('bg-red-500')
+      document.body.classList.add('bg-blue-500')
+    }
+
+    if (mainTime > 0) return
+
+    if (working && cyclesQtdManager.length > 0) {
+      configureRest(false)
+      cyclesQtdManager.pop()
+    } else if (working && cyclesQtdManager.length <= 0) {
+      configureRest(true)
+      setCyclesQtdManager(
+        new Array(Number(localStorage.getItem('cycles')) - 1).fill(true),
+      )
+      setCompletedCycles(completedCycles + 1)
+    }
+
+    if (working) setNumberOfPomodoros(numberOfPomodoros + 1)
+    if (resting) configureWork()
+  }, [
+    working,
+    resting,
+    mainTime,
+    configureRest,
+    setCyclesQtdManager,
+    completedCycles,
+    configureWork,
+    cyclesQtdManager,
+    numberOfPomodoros,
+  ])
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -112,6 +137,11 @@ export function PomodoroTimer({
                 : 'bg-blue-600 p-2 rounded-md text-white mx-5 w-20'
             }
           />
+        </div>
+        <div className="my-4">
+          <p>Ciclos concluídos: {completedCycles} </p>
+          <p>Horas trabalhadas: {secondsToTime(fullWorkingTime)} </p>
+          <p>Pomodoros concluídos: {numberOfPomodoros}</p>
         </div>
       </div>
     </div>

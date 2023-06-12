@@ -6,7 +6,7 @@ interface TimerProps {
 
 export function Timer({ mainTime }: TimerProps) {
   return (
-    <div className="flex h-60 w-[100%] items-center justify-center font-sans text-6xl">
+    <div className="flex h-52 w-[100%] items-center justify-center font-sans text-6xl">
       {secondsToTime(mainTime)}
     </div>
   )

@@ -13,7 +13,6 @@ export function Home() {
   const [cycles, setCycles] = useState('')
 
   if (isOpen) {
-    console.log(longRestTime)
     return (
       <h1>
         <PomodoroTimer
