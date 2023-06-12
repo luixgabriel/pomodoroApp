@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PomodoroTimer } from '../../components/pomodoro-timer'
-import { Newspaper, Timer, BedDouble, ArrowUp10 } from 'lucide-react'
+import { Newspaper, Timer, BedDouble, ArrowUp10, Coffee } from 'lucide-react'
 
 export function Home() {
   const [isOpen, setIsOpen] = useState<boolean | string | null>(
@@ -9,17 +9,18 @@ export function Home() {
   const [task, setTask] = useState('')
   const [pomodoroTimer, setPomodoroTimer] = useState('')
   const [shortRestTime, setShortRestTime] = useState('')
-  const [longRestTime, setLongRestTime] = useState(0)
+  const [longRestTime, setLongRestTime] = useState('')
   const [cycles, setCycles] = useState('')
 
   if (isOpen) {
+    console.log(longRestTime)
     return (
       <h1>
         <PomodoroTimer
           task={task}
           PomodoroTimer={Number(pomodoroTimer) * 60}
           shortRestTime={Number(shortRestTime) * 60}
-          longRestTime={longRestTime * 60}
+          longRestTime={Number(longRestTime) * 60}
           cycles={Number(cycles)}
         />
       </h1>
@@ -58,14 +59,26 @@ export function Home() {
             />
           </div>
           <div className=" mb-5 flex gap-5 text-lg">
-            <BedDouble color="white" />
-            <h1 className="font-raleway text-white">Time to rest</h1>
+            <Coffee color="white" />
+            <h1 className="font-raleway text-white">Short time to rest</h1>
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
               value={shortRestTime}
               name="task"
               onChange={(e) => setShortRestTime(e.target.value)}
+              required
+            />
+          </div>
+          <div className=" mb-5 flex gap-5 text-lg">
+            <BedDouble color="white" />
+            <h1 className="font-raleway text-white">Long time to rest</h1>
+            <input
+              type="text"
+              className=":focus border-b-2 border-white bg-transparent text-white outline-none"
+              value={longRestTime}
+              name="task"
+              onChange={(e) => setLongRestTime(e.target.value)}
               required
             />
           </div>
@@ -89,10 +102,15 @@ export function Home() {
                 'pomodoroTimer',
                 String(Number(pomodoroTimer) * 60),
               )
-              localStorage.setItem('shortRestTime', String(shortRestTime))
+              localStorage.setItem(
+                'shortRestTime',
+                String(Number(shortRestTime) * 60),
+              )
               localStorage.setItem('cycles', String(cycles))
-              setLongRestTime(Number(shortRestTime) * Number(shortRestTime))
-              localStorage.setItem('longRestTime', String(longRestTime))
+              localStorage.setItem(
+                'longRestTime',
+                String(Number(longRestTime) * 60),
+              )
               setIsOpen(true)
             }}
             className="

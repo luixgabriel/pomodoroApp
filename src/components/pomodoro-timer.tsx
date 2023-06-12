@@ -3,6 +3,10 @@ import { useInterval } from '../hooks/useInterval'
 import { Button } from './button'
 import { Timer } from './timer'
 import { Briefcase } from 'lucide-react'
+import bellStart from '../sounds/bell-start.mp3'
+import bellFinish from '../sounds/bell-finish.mp3'
+const audioStartWorking = new Audio(bellStart)
+const audioStopWorking = new Audio(bellFinish)
 
 interface PomodoroTimerProps {
   task: string
@@ -22,6 +26,7 @@ export function PomodoroTimer({
   const [mainTime, setMainTime] = useState<any>(
     PomodoroTimer || localStorage.getItem('pomodoroTimer'),
   )
+
   const [timeCounting, setTimeCounting] = useState(false)
   const [working, setWorking] = useState(false)
   const [resting, setResting] = useState(false)
@@ -35,7 +40,7 @@ export function PomodoroTimer({
       document.body.classList.remove('bg-red-500')
       document.body.classList.add('bg-blue-500')
     }
-  }, [working])
+  }, [working, resting])
 
   useInterval(
     () => {
@@ -49,6 +54,7 @@ export function PomodoroTimer({
     setWorking(true)
     setResting(false)
     setMainTime(localStorage.getItem('pomodoroTimer'))
+    audioStartWorking.play()
   }
 
   const configureRest = (long: boolean) => {
@@ -56,10 +62,13 @@ export function PomodoroTimer({
     setWorking(false)
     setResting(true)
     if (long) {
-      setMainTime(longRestTime)
+      setMainTime(localStorage.getItem('longRestTime'))
     } else {
-      setMainTime(shortRestTime)
+      setMainTime(localStorage.getItem('shortRestTime'))
+      console.log(localStorage.getItem('shortRestTime'))
+      console.log(mainTime)
     }
+    audioStopWorking.play()
   }
 
   return (
@@ -79,12 +88,11 @@ export function PomodoroTimer({
           <Button
             onclick={() => configureWork()}
             text="Work"
-            classname="bg-red-950 p-2 rounded-md text-white mx-5 w-20"
-          />
-          <Button
-            onclick={() => configureRest(false)}
-            text="Rest"
-            classname="bg-red-950 p-2 rounded-md text-white mx-5 w-20"
+            classname={
+              working
+                ? 'bg-red-600 p-2 rounded-md text-white mx-5 w-20'
+                : 'bg-blue-600 p-2 rounded-md text-white mx-5 w-20'
+            }
           />
           <Button
             onclick={() => setTimeCounting(!timeCounting)}
@@ -92,7 +100,16 @@ export function PomodoroTimer({
             classname={
               !working && !resting
                 ? 'hidden'
-                : 'bg-red-950 p-2 rounded-md text-white mx-5 w-20'
+                : 'bg-transparent p-2 rounded-md border text-white mx-5 w-20'
+            }
+          />
+          <Button
+            onclick={() => configureRest(false)}
+            text="Rest"
+            classname={
+              working
+                ? 'bg-red-600 p-2 rounded-md text-white mx-5 w-20'
+                : 'bg-blue-600 p-2 rounded-md text-white mx-5 w-20'
             }
           />
         </div>
