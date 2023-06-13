@@ -27,13 +27,13 @@ export function Home() {
   }
   return (
     <div className="flex h-screen  items-center justify-center">
-      <div className="flex h-[90%] w-[90%] items-center justify-center gap-8 ">
-        <div className="flex min-w-[50%] justify-center text-7xl font-bold text-white  ">
+      <div className="items-center justify-center gap-8 md:flex md:h-[90%] md:w-[90%] ">
+        <div className="mb-5 flex min-w-[50%] justify-center text-5xl font-bold text-white md:text-7xl  ">
           <h1 className="font-raleway font-extrabold">Pomodoro App</h1>
         </div>
         <div className="h-5/6 w-1 rounded-sm bg-white" />
-        <div className="flex min-w-[40%] flex-col justify-center">
-          <div className="mb-5 flex w-full gap-4 text-lg ">
+        <div className="flex flex-col justify-center md:min-w-[40%]">
+          <div className="my-1 flex w-full gap-4 text-lg md:mb-5">
             <Newspaper color="white" />
             <h1 className="font-raleway text-white">Task</h1>
             <input
@@ -45,7 +45,7 @@ export function Home() {
               required
             />
           </div>
-          <div className="mb-5 flex gap-5 text-lg">
+          <div className="my-3 flex w-full gap-4 text-lg md:mb-5 ">
             <Timer color="white" />
             <h1 className="font-raleway text-white">Timer</h1>
             <input
@@ -57,7 +57,7 @@ export function Home() {
               required
             />
           </div>
-          <div className=" mb-5 flex gap-5 text-lg">
+          <div className=" my-3 flex w-full gap-4 text-lg md:mb-5 ">
             <Coffee color="white" />
             <h1 className="font-raleway text-white">Short time to rest</h1>
             <input
@@ -69,7 +69,7 @@ export function Home() {
               required
             />
           </div>
-          <div className=" mb-5 flex gap-5 text-lg">
+          <div className=" my-3 flex w-full gap-4 text-lg md:mb-5 ">
             <BedDouble color="white" />
             <h1 className="font-raleway text-white">Long time to rest</h1>
             <input
@@ -81,7 +81,7 @@ export function Home() {
               required
             />
           </div>
-          <div className=" mb-5 flex gap-5 text-lg">
+          <div className="my-3 flex w-full gap-4 text-lg md:mb-5">
             <ArrowUp10 color="white" />
             <h1 className="font-raleway text-white">Number of pomodoros</h1>
             <input
@@ -114,15 +114,17 @@ export function Home() {
             }}
             className="
             text-md
+            mt-5
             inline-flex
             items-center
             justify-center
             rounded-md
             bg-blue-400
-            px-4 py-2
-            font-raleway
+            px-4
+            py-2 font-raleway
             text-white
-            hover:bg-blue-600"
+            hover:bg-blue-600
+            md:mt-1"
           >
             {' '}
             Start
