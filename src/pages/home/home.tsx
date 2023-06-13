@@ -33,7 +33,7 @@ export function Home() {
         </div>
         <div className="hidden h-5/6 w-1 rounded-sm bg-white md:block" />
         <div className="w-90 justify-centertext-sm flex flex-col sm:min-w-[40%]">
-          <div className="md:text-lg5 my-1 flex w-full gap-4 text-sm sm:my-0 sm:mb-5">
+          <div className="my-1 flex w-full gap-4 text-sm sm:my-0 sm:mb-5 md:text-lg ">
             <Newspaper color="white" />
             <h1 className="font-raleway text-white">Task</h1>
             <input
