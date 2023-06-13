@@ -35,7 +35,7 @@ export function Home() {
         <div className="w-90 justify-centertext-sm flex flex-col sm:min-w-[40%]">
           <div className="md:text-lg5 my-1 flex w-full gap-4 text-sm sm:my-0 sm:mb-5">
             <Newspaper color="white" />
-            <h1 className="text-md font-raleway text-white">Task</h1>
+            <h1 className="font-raleway text-white">Task</h1>
             <input
               type="text"
               className=":focus border-b-2 border-white bg-transparent text-white outline-none"
