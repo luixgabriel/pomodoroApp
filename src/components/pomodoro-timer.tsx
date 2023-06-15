@@ -25,12 +25,17 @@ export function PomodoroTimer(props: PomodoroTimerProps) {
   const [timeCounting, setTimeCounting] = useState(false)
   const [working, setWorking] = useState(false)
   const [resting, setResting] = useState(false)
-  const [cyclesQtdManager, setCyclesQtdManager] = useState(
-    new Array(Number(localStorage.getItem('cycles')) - 1).fill(true),
-  )
+  const [cyclesQtdManager, setCyclesQtdManager] = useState<any>(0)
   const [completedCycles, setCompletedCycles] = useState(0)
   const [fullWorkingTime, setFullWorkingTime] = useState(0)
   const [numberOfPomodoros, setNumberOfPomodoros] = useState(0)
+
+  useEffect(() => {
+    if (localStorage.getItem('cycles'))
+      setCyclesQtdManager(
+        new Array(Number(localStorage.getItem('cycles')) - 1).fill(true),
+      )
+  }, [])
 
   useInterval(
     () => {

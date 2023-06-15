@@ -12,6 +12,26 @@ export function Home() {
   const [longRestTime, setLongRestTime] = useState('')
   const [cycles, setCycles] = useState('')
 
+  const saveInLocalStorage = () => {
+    if (
+      task === '' ||
+      pomodoroTimer === '' ||
+      shortRestTime === '' ||
+      longRestTime === '' ||
+      cycles === ''
+    ) {
+      alert('Please fill out the complete form.')
+      return
+    }
+    localStorage.setItem('timerState', 'true')
+    localStorage.setItem('task', String(task))
+    localStorage.setItem('pomodoroTimer', String(Number(pomodoroTimer) * 60))
+    localStorage.setItem('shortRestTime', String(Number(shortRestTime) * 60))
+    localStorage.setItem('cycles', String(cycles))
+    localStorage.setItem('longRestTime', String(Number(longRestTime) * 60))
+    setIsOpen(true)
+  }
+
   if (isOpen) {
     return (
       <h1>
@@ -94,24 +114,7 @@ export function Home() {
             />
           </div>
           <button
-            onClick={() => {
-              localStorage.setItem('timerState', 'true')
-              localStorage.setItem('task', String(task))
-              localStorage.setItem(
-                'pomodoroTimer',
-                String(Number(pomodoroTimer) * 60),
-              )
-              localStorage.setItem(
-                'shortRestTime',
-                String(Number(shortRestTime) * 60),
-              )
-              localStorage.setItem('cycles', String(cycles))
-              localStorage.setItem(
-                'longRestTime',
-                String(Number(longRestTime) * 60),
-              )
-              setIsOpen(true)
-            }}
+            onClick={() => saveInLocalStorage()}
             className="
             text-md
             mt-5
